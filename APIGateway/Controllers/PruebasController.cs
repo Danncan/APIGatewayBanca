@@ -117,6 +117,32 @@ namespace APIGateway.Controllers
                     pago3 = new mostrarPagosDTO("Pago4s3" + ci, 400);
                     lstPagos.Add(pago3);
                     break;
+                case "Pago de Colegiaturas":
+                    mostrarPagosDTO pago4 = new mostrarPagosDTO("Pago de Colegiatura1" + ci, 100);
+                    lstPagos.Add(pago4);
+                    pago4 = new mostrarPagosDTO("Pago de Colegiatur2" + ci, 200);
+                    lstPagos.Add(pago4);
+                    pago4 = new mostrarPagosDTO("Pago de Colegiatur3" + ci, 300);
+                    lstPagos.Add(pago4);
+                    pago4 = new mostrarPagosDTO("Pago de Colegiatur4" + ci, 400);
+                    lstPagos.Add(pago4);
+                    break;
+                case "Pago Almacenamiento en la Nube":
+                    mostrarPagosDTO pago5 = new mostrarPagosDTO( "Pago Almacenamiento en la Nube1" + ci);
+                    lstPagos.Add(pago5);
+                    pago5 = new mostrarPagosDTO("Pago Almacenamiento en la Nube2" + ci, 200);
+                    lstPagos.Add(pago5);
+                    break;
+                case "Pago Planes":
+                    mostrarPagosDTO pago6 = new mostrarPagosDTO("Pago Planes1" + ci, 100);
+                    lstPagos.Add(pago6);
+                    pago6 = new mostrarPagosDTO("Pago Planes2" + ci, 200);
+                    lstPagos.Add(pago6);
+                    pago6 = new mostrarPagosDTO("Pago Planes3" + ci, 300);
+                    lstPagos.Add(pago6);
+                    pago6 = new mostrarPagosDTO("Pago Planes4" + ci, 400);
+                    lstPagos.Add(pago6);
+                    break;
                 default:
                     break;
             }
