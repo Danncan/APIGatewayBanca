@@ -20,9 +20,12 @@ namespace Patron_Diseño
         public string codPago { get; set; }
         public decimal monto { get; set; }
 
+        //Constructor para parsear el JSON
         public mostrarPagosDTO(string tx)
         {
+            //Parsear el JSON
             JObject JObjectPagos = JObject.Parse(tx);
+            //Obtener los valores de los atributos
             codPago = (string)JObjectPagos["codPago"];
             monto = (decimal)JObjectPagos["monto"];
         }

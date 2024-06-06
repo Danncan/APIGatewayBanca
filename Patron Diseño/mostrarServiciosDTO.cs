@@ -18,9 +18,12 @@ namespace Patron_Diseño
         }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
+        //Constructor para parsear el JSON
         public mostrarServiciosDTO(string tx)
         {
+            //Parsear el JSON
             JObject JObjectServicios = JObject.Parse(tx);
+            //Obtener los valores de los atributos
             Nombre = (string)JObjectServicios["Nombre"];
             Descripcion= (string)JObjectServicios["Descripcion"];
         }

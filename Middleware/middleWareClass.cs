@@ -1,4 +1,4 @@
-﻿using Middleware.Patron_Diseño;
+﻿using Middleware;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Patron_Diseño;
@@ -19,11 +19,15 @@ namespace Middleware
             List<mostrarServiciosDTO> lstServicios = new List<mostrarServiciosDTO>();
 
             #region Almacenamiento en la Nube
+            //Habilitar certificados autofirmados cualquier servidor
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-
+            //URL del servicio del metodo mostrarServicios
             string uriPAN = String.Format("https://172.16.7.10:5019/api/ServicioPAN/mostrarServicios");
+            //Instancia de WebClient para consumir el servicio
             WebClient clientPAN = new WebClient();
+            //Respuesta del servicio y se guarda en una variable
             string respuestaPAN = clientPAN.DownloadString(new Uri(uriPAN));
+            //Deserializacion de la respuesta a un objeto de tipo mostrarServiciosDTO
             mostrarServiciosDTO datosPAN= JsonConvert.DeserializeObject<mostrarServiciosDTO>(respuestaPAN);
             lstServicios.Add(datosPAN);
             #endregion
@@ -199,16 +203,22 @@ namespace Middleware
 
         public List<mostrarPagosDTO> mostrarPagos(string ci,string serviceName)
         {
+            //Habilitar certificados autofirmados cualquier servidor
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-
+            //Lista de pagos
             List<mostrarPagosDTO> lstPagos = new List<mostrarPagosDTO>();
 
             switch (serviceName)
             {
+                //Switch para consumir los servicios de los microservicios
                 case "Pago de Colegiaturas":
+                    //URL del servicio del metodo mostrarPagos pasandola cedula como parametro en l uri
                     string uriPCA = String.Format("https://172.16.7.10:5022/api/ServicioPCA/mostrarPagos/" + ci);
+                    //Instancia de WebClient para consumir el servicio
                     WebClient clientPCA = new WebClient();
+                    //Respuesta del servicio y se guarda en una variable
                     string respuestaPCA = clientPCA.DownloadString(new Uri(uriPCA));
+                    //Deserializacion de la respuesta a un objeto de tipo mostrarPagosDTO
                     List<mostrarPagosDTO> datosPCA = JsonConvert.DeserializeObject<List<mostrarPagosDTO>>(respuestaPCA);
                     lstPagos.AddRange(datosPCA);
                     break;
@@ -364,76 +374,7 @@ namespace Middleware
             return lstPagos;
 
         }
-        /*
-        public async Task<bool> ActualizarEstado(string codPago, string serviceName)
-        {
-            switch (serviceName)
-            {
-                case "Pago de Colegiaturas":
-                    var gatewayPCA = new ApiGateway("http://172.16.0.183:5022/api/ServicioPCA/");
-                    bool resultadoPCA = await gatewayPCA.actualizarEstado(codPago);
-                    return resultadoPCA;
-
-                case "Pago Almacenamiento en la Nube":
-                    
-                    var aaa = new HttpClientService();
-                    var aaaaaaa = aaa.GetAsync("https://172.16.7.10:5019/api/ServicioPAN/actualizarEstadoPAN/PAN23");
-                    var gatewayPAN = new ApiGateway("https://172.16.7.10:5019/api/ServicioPAN/actualizarEstadoPAN/");
-
-                    string a = "https://172.16.7.10:5019/api/ServicioPAN/actualizarEstadoPAN/PAN23";
-                    JObject JObjectPagos = JObject.Parse(a);
-                    string codPagoPAN = JObjectPagos["codPago"].ToString();
-                    bool aaaa = true;
-                    
-                    //bool resultadoPAN = await gatewayPAN.actualizarEstado(codPago);
-                    /*
-                    var prueba = new Prueba1();
-                     var aaa =prueba.ActualizarEstadoPANAsync(codPago);
-                    return true;
-                
-                case "Pago Planes":
-                    var gatewayPTO = new ApiGateway("https://172.16.7.10:5005/api/ServicioPTO/actualizarEstado/");
-                    bool resultadoPTO = await gatewayPTO.actualizarEstado(codPago);
-                    return resultadoPTO;
-
-                case "Recarga de Juegos":
-                    var gatewayPRJ = new ApiGateway("http://172.16.7.10:5011/api/ServicioPRJ/actualizarEstado/");
-                    bool resultadoPRJ = await gatewayPRJ.actualizarEstado(codPago);
-                    return resultadoPRJ;
-                case "Suscripcion de Musica":
-                    var gatewayPSM = new ApiGateway("http://172.16.7.10:5013/api/PSM/actualizarEstadoPSM/");
-                    bool resultadoPSM = await gatewayPSM.actualizarEstado(codPago);
-                    return resultadoPSM;
-                case "Awita":
-                    //Enrutamiento a la API de PMA
-                    var gatewayPMA = new ApiGateway("https://172.16.7.10:5012/api/pma/actualizarEstadoPMA/");
-                    bool resultadoPMA = await gatewayPMA.actualizarEstado(codPago);
-                    return resultadoPMA;
-                case "MetroQuito":
-                    var gatewayMQU = new ApiGateway("https://172.16.7.10:5018/api/MandarDatosDTO/actualizar/");
-                    bool resultadosMQU = await gatewayMQU.actualizarEstado(codPago);
-                    return resultadosMQU;
-
-                case "Pago de Agua Potable":
-                    var gatewayPSA = new ApiGateway("https://172.16.7.10:5009/api/ServicioPSA/actualizarEstado/");
-                    bool resultadoPSA = await gatewayPSA.actualizarEstado(codPago);
-                    return resultadoPSA;
-                case "Xbox Game Pass":
-                    var gatewayPXG = new ApiGateway("https://172.16.7.10:5023/api/actualizarEstadoPXG/");
-                    bool resultadoPXG = await gatewayPXG.actualizarEstado(codPago);
-                    return resultadoPXG;
-                case "Pago de Impuesto Verde":
-                    var gatewayPIV = new ApiGateway("https://172.16.7.10:5008/api/ServicioPIV/actualizarEstado/");
-                    bool resultadoPIV = await gatewayPIV.actualizarEstado(codPago);
-                    return resultadoPIV;
-
-                default:
-                    break;
-            }
-
-
-            return false;
-        }*/
+       
 
 
     }

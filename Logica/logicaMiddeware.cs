@@ -22,10 +22,5 @@ namespace Logica
         {
             return temMidleware.mostrarPagos(ci, serviceName);
         }
-        /*
-        public bool actualizarEstado(string codPago, string serviceName)
-        {
-            return temMidleware.ActualizarEstado(codPago, serviceName).Result;
-        }*/
     }
 }

@@ -79,8 +79,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiGateway.cs" />
-    <Compile Include="HttpClientService.cs" />
     <Compile Include="middleWareClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
